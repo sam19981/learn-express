@@ -19,14 +19,14 @@ const addMsgToRequest = function (req, res, next) {
   }
   else {
     return res.json({
-        error: {message: 'users not found', status: 404}
-    });
+                      error: {message: 'users not found', status: 404}
+                    });
   }
-  
+
 }
 
 app.use(
-  cors({origin: 'http://localhost:3000'})
+    cors({origin: 'http://localhost:3000'})
 );
 app.use('/read/usernames', addMsgToRequest);
 
@@ -35,6 +35,18 @@ app.get('/read/usernames', (req, res) => {
     return {id: user.id, username: user.username};
   });
   res.send(usernames);
+});
+
+app.use('/read/username', addMsgToRequest);
+app.get('/read/username/:name', (req, res) => {
+  const name = req.params.name;
+  const users = req.users.filter(person => person.username === name);
+
+  if (users.length === 0) {
+    console.log('User not found');
+    return res.status(404).send('User not found');
+  }
+  res.send(users);
 });
 
 app.use(express.json());
