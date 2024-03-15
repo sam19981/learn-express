@@ -22,14 +22,14 @@ const addMsgToRequest = function (req, res, next) {
   }
   else {
     return res.json({
-        error: {message: 'users not found', status: 404}
-    });
+                      error: {message: 'users not found', status: 404}
+                    });
   }
-  
+
 }
 
 app.use(
-  cors({origin: 'http://localhost:3000'})
+    cors({origin: 'http://localhost:3000'})
 );
 app.use(addMsgToRequest);
 
